@@ -6,7 +6,7 @@ The change is on your screen only. Nothing is posted or sent to the site.
 
 ![Deslop on a long post on X](docs/x-post.gif)
 
-Cut to the bone on a LinkedIn post, 226 words down to 114:
+Cut to the bone on a LinkedIn post, 226 words down to 146:
 
 ![Deslop on a LinkedIn post](docs/linkedin-post.gif)
 
