@@ -53,13 +53,23 @@ Choices are remembered. A long list of cuts speeds the animation up, so a ruthle
 
 ## What counts as slop
 
-- Announcing and throat-clearing: "I'm thrilled to share", "Here's the thing", "In today's fast-paced world".
-- Engagement bait: hook lines that withhold the point, closers like "Agree?", "Thoughts?", "Let that sink in."
-- Constructions used for drama: "It's not X, it's Y", triads for rhythm, one-line paragraphs for effect, a question answered in the next sentence.
-- Hollow words: intensifiers, corporate jargon, vague abstractions where a plain word exists.
-- Padding: sentences that restate the previous one, wordy phrases, stacked hashtags, emoji used as bullets.
+The rules are grouped by where the slop sits.
 
-The author's facts, names and numbers are kept. Paragraph labels such as "Step 2:" are treated as structure and left in place. The full instructions are in `server/server.js`.
+| Group | Examples |
+|---|---|
+| Openers and closers | "I'm thrilled to share", "In today's fast-paced world", "What nobody tells you", hook lines that withhold the point, "Agree?", "Repost if this helped", "In conclusion", a closing aphorism, chat residue such as "I hope this helps" |
+| Sentences that carry nothing | "Here's what I found", "3 things stood out", a sentence that restates the one before it, the moral stated after the example, "Let that sink in.", a question answered in the next sentence, lessons that could be sent to anyone |
+| Constructions used for drama | "It's not X, it's Y" in every form, one-line paragraphs for effect, "Fast. Cheap. Reliable.", lists forced to three, a colon or dash before a punchy reveal, a "despite" clause about something never discussed, a trailing ", highlighting..." clause |
+| Hollow words | delve, tapestry, landscape, journey, seamless, robust, unlock, leverage, pivotal; intensifiers such as truly and incredibly; "plays a vital role"; "serves as" where "is" would do; "moves the needle" |
+| Claims with nothing behind them | "Studies show" and "experts agree" with no named source, a hedge on every claim, a silver lining after every criticism |
+| Padding | "in order to", "due to the fact that", "each and every", the action buried in a noun ("the implementation of X enables the prevention of Y"), a new synonym each time for the same thing |
+| Formatting as decoration | hashtag stacks, emoji or arrows as bullets, bold made from special Unicode letters, capitals for emphasis |
+
+Kept at every strength: facts, numbers, names, dates, quotes and decisions; a first-hand detail only the author could have written; paragraph labels such as "Step 2:"; a negation that carries the actual content; the author's casual voice and humour.
+
+Gentle touches only the openers and closers, the performed emphasis, the formatting and the intensifiers. Firm and above use every group. The full instructions are in `server/server.js`.
+
+The rules come from the author's own anti-slop rule set, plus two public catalogues: Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and the LessWrong posts [Hot take: problems with AI prose](https://www.lesswrong.com/posts/nTuKjJBwMtMuuLonA/hot-take-problems-with-ai-prose) and [LLM style slop is absolutely everywhere](https://www.lesswrong.com/posts/yBM2rQ6AJY6MoRGFQ/llm-style-slop-is-absolutely-everywhere).
 
 ## How it works
 

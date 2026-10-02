@@ -35,12 +35,56 @@ const countWords = (s) => (String(s || "").match(/\b[\w'’-]+\b/g) || []).lengt
 
 const DESLOP_SYSTEM = `You clean up a piece of writing someone is reading on the web, often a LinkedIn post. Find the slop and give the replacement for each piece. The reader watches each flagged phrase get blasted out of the page and the replacement painted in, so every edit must leave text that reads correctly.
 
-What counts as slop:
-- Announcing and throat-clearing: "I'm thrilled to share", "Here's the thing", "Let me be clear", "In today's fast-paced world", "It's worth noting that".
-- Engagement bait: hook lines that withhold the point, closers like "Agree?", "Thoughts?", "Let that sink in.", "Read that again."
-- Constructions used for drama: "It's not X, it's Y", triads for rhythm, one-word or one-line paragraphs for effect, a question answered in the next sentence.
-- Hollow words: intensifiers ("truly", "incredibly", "deeply"), corporate jargon ("leverage", "unlock", "game-changing", "seamless"), vague abstractions where a plain word exists.
-- Padding: sentences that restate the previous one, wordy phrases ("in order to", "at this point in time"), stacked hashtags, emoji used as bullets or decoration.
+What counts as slop, grouped by where it sits:
+
+Openers and closers
+- Announcing and throat-clearing: "I'm thrilled to share", "I'm humbled to announce", "Here's the thing", "Let me be clear", "Let's dive in", "Before we begin", "It's worth noting that".
+- Openers about the era or the industry: "In today's fast-paced world", "In the age of AI".
+- False exclusivity: "What nobody tells you", "The part everyone misses", "Here's what most people get wrong".
+- Hook lines that withhold the point, and engagement bait: "Agree?", "Thoughts?", "Comment YES", "Tag someone who needs this", "Follow me for more", "Repost if this helped", "Link in the comments", a P.S. that asks for a reaction.
+- Closers that restate: "In conclusion", "The bottom line", "At the end of the day", "To sum up", a last paragraph that repeats the post, a closing aphorism or moral.
+- Chat residue: "Great question", "I hope this helps", "Here's a breakdown", "Certainly!".
+
+Sentences that carry nothing
+- Announcement sentences: "Here's what I found", "This is the part that matters", "The interesting thing is", "Here's why".
+- Counting the list before giving it: "3 things stood out", "It comes down to one thing".
+- A sentence that only names the topic of the next one, or says the post is about to say something.
+- A sentence that restates the one before it, or states the moral right after the example that showed it.
+- Performed emphasis: "Let that sink in.", "Read that again.", "Full stop.", "Period.", "Make no mistake", "That's it. That's the post."
+- A question the author answers in the next sentence.
+- Generic lessons that could be sent to anyone in any industry and still make sense.
+
+Constructions used for drama
+- "It's not X, it's Y" in every form: "not just X, but Y", "It isn't about X. It's about Y.", "X, not Y." Keep only Y.
+- A short quotable line placed for rhythm that adds no fact. One-line paragraphs for effect.
+- Fragment runs: "Fast. Cheap. Reliable." Lists forced to three. Balanced or mirrored clauses on ordinary material.
+- A noun phrase, a colon or a dash, then a punchy reveal.
+- A despite / while / although clause conceding something the post never discusses.
+- A trailing clause that pretends to explain: ", highlighting...", ", underscoring...", ", showcasing...", ", reflecting...".
+
+Hollow words
+- The stock vocabulary: delve, tapestry, vibrant, realm, beacon, landscape, journey, navigate, game-changing, revolutionary, groundbreaking, transformative, cutting-edge, world-class, seamless, frictionless, robust, unlock, harness, leverage, elevate, empower, foster, embark, pivotal, crucial, paramount, testament, synergy.
+- Intensifiers and filler: truly, really, incredibly, absolutely, extremely, deeply, fundamentally, simply, literally, genuinely, honestly, actually, basically, just.
+- Importance flags: crucially, importantly, notably, "plays a vital role", "stands as a testament", "marks a pivotal moment".
+- A dressed-up verb where "is" or the plain verb would do: serves as, acts as, stands as, represents, boasts, revolutionized, transformed.
+- Stock metaphors where a literal phrase exists: "moves the needle", "where the rubber meets the road", "north star", "double-edged sword".
+- Stacked connectives: moreover, furthermore, additionally.
+
+Claims with nothing behind them
+- "Studies show", "experts agree", "research suggests" with no named source. Cut the attribution or the claim.
+- Hedges on every claim: might, perhaps, arguably, somewhat, generally. A silver-lining sentence after every criticism.
+
+Padding
+- Wordy phrases: "in order to" (to), "due to the fact that" (because), "at this point in time" (now), "has the ability to" (can), "a large number of" (many), "each and every" (each), "end result" (result).
+- The action buried in a noun: "the implementation of X enables the prevention of Y" (X prevents Y).
+- A different synonym each time for the same thing. Repeat the noun.
+
+Formatting as decoration
+- Stacked hashtags. Emoji used as bullets, pointers or decoration. Arrows used as bullets.
+- Bold or italic made from special Unicode letters: write the same words in plain letters.
+- Words in capitals for emphasis.
+
+What is not slop, at any strength: a fact, number, name, date, quote or decision. A first-hand detail only this author could have written. A short label that opens a paragraph. A negation that carries the actual content. A metaphor that is the standard name for the thing. The author's casual voice and humour.
 
 Rules:
 - "quote" is an exact, verbatim substring of the text. It sits on a single line and you copy it character for character: punctuation, emoji, capitalisation, spacing.
@@ -57,8 +101,8 @@ Return ONLY JSON: {"edits": [{"quote": "...", "fix": "...", "why": "2 to 5 words
 
 // The dial. Each step widens what counts as slop and how much may go.
 const DESLOP_STRENGTH = {
-  1: "GENTLE. Touch only the obvious: announcing lines, engagement bait, hashtag stacks, emoji bullets, hollow intensifiers. Leave the author's sentences and opinions as they are. At most 6 edits.",
-  2: "FIRM. Everything on the list above. Leave sentences that are fine alone. At most 10 edits, most worthwhile first.",
+  1: "GENTLE. Touch only the obvious: openers and closers, engagement bait, performed emphasis, formatting as decoration, intensifiers. Leave the author's sentences and opinions as they are. At most 6 edits.",
+  2: "FIRM. Everything on the list above. Leave sentences that are fine alone. At most 14 edits, most worthwhile first.",
   3: "RUTHLESS. A sentence stays only if it carries a fact, a number, a decision, or a specific claim the author can stand behind. Platitudes, generic lessons, scene-setting, restated points and motivational lines are cut whole: quote the full sentence and set fix to \"\". Where a sentence has substance wrapped in padding, quote the whole sentence and give the tight version. Aim for half the original length or less. Up to 24 edits.",
   4: "TO THE BONE. Strip it to what happened and what is being claimed, in the fewest plain words. Everything else goes: openers, closers, lists of generic advice, opinions with no support, adjectives, hedges, any sentence a reader would not miss. Rewrite each surviving sentence as short as it can be said. If only one sentence of substance exists, only that sentence survives. Aim for a third of the original length or less. Up to 40 edits.",
 };
