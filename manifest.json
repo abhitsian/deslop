@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Deslop",
+  "version": "0.5.0",
+  "description": "Click a post or paragraph. A worker, ninja, chomper or crane reads it, removes the slop, and puts plain words in its place.",
+  "action": {
+    "default_title": "Deslop: click, then pick a post or paragraph (Alt+Shift+D)"
+  },
+  "background": {
+    "service_worker": "bg.js"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:5055/*"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      }
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}

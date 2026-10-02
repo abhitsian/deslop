@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deslop test page</title>
+<link rel="stylesheet" href="../content.css">
+<style>
+  body { margin: 0; background: #f4f2ee; font: 14px/1.45 -apple-system, system-ui, "Segoe UI", sans-serif; color: rgba(0,0,0,.9); }
+  .bar { background: #fff; border-bottom: 1px solid #e0dfdc; padding: 12px 24px; font-weight: 600; color: #0a66c2; }
+  .bar span { font-weight: 400; color: #666; margin-left: 10px; font-size: 12px; }
+  .feed { width: 555px; margin: 28px auto 120px; }
+  .card { background: #fff; border: 1px solid #e0dfdc; border-radius: 8px; padding: 14px 16px 10px; margin-bottom: 14px; }
+  .who { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .who i { width: 44px; height: 44px; border-radius: 50%; background: #c9d6ea; }
+  .who b { display: block; } .who small { color: #666; }
+  .update-components-text { white-space: normal; }
+  .update-components-text a { color: #0a66c2; text-decoration: none; font-weight: 600; }
+  .acts { display: flex; gap: 26px; border-top: 1px solid #ebebeb; margin-top: 12px; padding-top: 9px; color: #666; font-weight: 600; font-size: 13px; }
+  button.try { font: inherit; margin-left: 16px; padding: 4px 10px; border-radius: 14px; border: 1px solid #0a66c2; background: #fff; color: #0a66c2; cursor: pointer; }
+</style></head>
+<body>
+<div class="bar">A feed that looks like LinkedIn <span>test page for the Deslop extension</span><button class="try" id="try">Run without the extension (canned rewrite)</button></div>
+<div class="feed">
+  <div class="card">
+    <div class="who"><i></i><div><b>Jordan Avery</b><small>VP Growth · 2h</small></div></div>
+    <div class="update-components-text"><span dir="ltr">I'm thrilled to announce something truly game-changing. 🚀<br><br>Here's the thing: most teams don't have a productivity problem. They have a clarity problem.<br><br>After 10 years of building products, I've learned three things:<br>✅ Shipping beats perfection<br>✅ Feedback is a gift<br>✅ Culture eats strategy for breakfast<br><br>It's not about working harder. It's about working smarter.<br><br>Last quarter we cut our release cycle from six weeks to two by removing one approval step. In today's fast-paced world, that kind of speed is absolutely essential in order to stay ahead of the curve.<br><br>Let that sink in.<br><br>Agree? Drop your thoughts below. 👇<br><br><a href="#">#leadership</a> <a href="#">#productivity</a> <a href="#">#growthmindset</a></span></div>
+    <div class="acts"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+  </div>
+  <div class="card">
+    <div class="who"><i></i><div><b>Sam Okafor</b><small>Engineer · 5h</small></div></div>
+    <div class="update-components-text"><span dir="ltr">We moved our build from 14 minutes to 4 by caching the dependency step. The change was nine lines. Write-up in the comments.</span></div>
+    <div class="acts"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+  </div>
+</div>
+<script>
+  // Without the extension: load the same page script and answer with a fixed rewrite, so the animation can be tried offline.
+  document.getElementById("try").onclick = () => {
+    window.__deslopBackend = async (text, level, bin) => {
+      await new Promise((r) => setTimeout(r, 2500));
+      const all = [
+        ["I'm thrilled to announce something truly game-changing. 🚀", ""],
+        ["Here's the thing: most", "Most"],
+        ["✅ Shipping", "- Shipping"], ["✅ Feedback", "- Feedback"], ["✅ Culture", "- Culture"],
+        ["It's not about working harder. It's about working smarter.", ""],
+        ["In today's fast-paced world, that kind of speed is absolutely essential in order to stay ahead of the curve.", "That kind of speed keeps a team ahead."],
+        ["Let that sink in.", ""], ["Agree? Drop your thoughts below. 👇", ""],
+      ];
+      const edits = all.filter(([q]) => text.includes(q)).map(([quote, fix]) => ({ quote, fix }));
+      // at Ruthless and above, with "bin it" ticked, the canned answer is a from-scratch rewrite
+      const binned = bin && level >= 3 && edits.length > 4;
+      return { ok: true, edits, fraction: binned ? 0.83 : 0.4, rewrite: binned ? "Last quarter we cut our release cycle from six weeks to two by removing one approval step." : null };
+    };
+    if (window.__deslop) return window.__deslop.pick();
+    const s = document.createElement("script"); s.src = "../content.js"; document.body.append(s);
+  };
+</script>
+</body></html>

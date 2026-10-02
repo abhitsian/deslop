@@ -1,0 +1,15 @@
+/* Deslop: the only styles that touch the page's own text. Everything else lives in a shadow root. */
+.dsl-slop { border-radius: 2px; transition: background-color .25s, color .15s; }
+.dsl-slop.dsl-spotted { background: rgba(200, 55, 45, .12); text-decoration: underline wavy #c8372d 1.5px; text-underline-offset: 4px; }
+.dsl-slop.dsl-hole, .dsl-slop.dsl-hole * { color: transparent !important; text-decoration: none !important; }
+.dsl-slop.dsl-hole { background: repeating-linear-gradient(-45deg, rgba(93, 102, 117, .2) 0 3px, transparent 3px 7px); outline: 1px dashed rgba(93, 102, 117, .5); outline-offset: -1px; }
+.dsl-slop.dsl-eaten { background: none; outline: 1px dotted rgba(93, 102, 117, .4); outline-offset: -1px; }
+.dsl-w { display: inline-block; }
+/* replacements, by style: painted on (roller in red, brush in black ink), popped out, or lowered in */
+.dsl-fix.dsl-paint .dsl-w { color: #c8372d; clip-path: inset(0 100% 0 0); }
+.dsl-fix.dsl-paint.dsl-ink .dsl-w { color: #15171b; font-weight: 600; }
+.dsl-fix.dsl-paint.dsl-dry .dsl-w { color: inherit; font-weight: inherit; transition: color .9s ease; }
+.dsl-fix.dsl-pop .dsl-w, .dsl-fix.dsl-lower .dsl-w { opacity: 0; }
+::highlight(dsl-reading) { background-color: rgba(232, 184, 58, .45); }
+.dsl-pick { outline: 2px dashed #c8372d !important; outline-offset: 5px !important; cursor: crosshair !important; }
+.dsl-site { transition: margin-top .3s cubic-bezier(.2, .7, .2, 1) !important; }
